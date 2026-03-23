@@ -1117,8 +1117,24 @@ footer p {
         font-size: 18px;
     }
     
+    .calendar-days .wedding-day {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .calendar-days .wedding-day::before {
+        font-size: 34px;
+        -webkit-text-stroke: 1px #d4af37;
+    }
+    
     .calendar-days span {
-        font-size: 12px;
+        font-size: 13px;
+        padding: 6px 0;
     }
     
     .calendar-month {
