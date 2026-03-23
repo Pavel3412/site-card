@@ -1004,7 +1004,7 @@ footer p {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* Адаптация */
-@media (max-width: 600px) {
+@media screen {
     .envelope-css {
         width: 280px;
         height: 200px;
