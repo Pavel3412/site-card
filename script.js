@@ -157,6 +157,7 @@ if (weddingForm) {
 document.addEventListener('DOMContentLoaded', function() {
     const timeline = document.querySelector('.timeline');
     const hearts = document.querySelectorAll('.timeline-heart');
+    const timelineItems = document.querySelectorAll('.timeline-item');
     
     if (timeline && hearts.length) {
         const observerTimeline = new IntersectionObserver((entries) => {
@@ -180,8 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observerTimeline.observe(timeline);
     }
     
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    
     if (timelineItems.length) {
         const observerItems = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -196,6 +195,25 @@ document.addEventListener('DOMContentLoaded', function() {
         timelineItems.forEach(item => {
             observerItems.observe(item);
         });
+    }
+
+    function updateTimelineHeartPosition() {
+        if (!timeline || !timelineItems.length) return;
+
+        const timelineRect = timeline.getBoundingClientRect();
+        const trackPadding = 24;
+        const viewportAnchor = window.innerHeight * 0.45;
+        const totalScrollable = Math.max(timelineRect.height - trackPadding * 2, 1);
+        const progress = Math.min(
+            Math.max((viewportAnchor - timelineRect.top - trackPadding) / totalScrollable, 0),
+            1
+        );
+        const relativeTop = trackPadding + (totalScrollable * progress);
+        const waveTurns = 5;
+        const waveOffset = Math.sin(progress * Math.PI * waveTurns) * 32;
+
+        timeline.style.setProperty('--heart-top', `${relativeTop}px`);
+        timeline.style.setProperty('--heart-offset-x', `${waveOffset}px`);
     }
     
     function updateHeartColors() {
@@ -216,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.classList.remove('active');
             }
         });
+
+        updateTimelineHeartPosition();
     }
     
     window.addEventListener('scroll', updateHeartColors);
@@ -277,7 +297,7 @@ window.addEventListener('resize', function() {
 
 // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ И ИСЧЕЗНОВЕНИЯ БЛОКОВ ПРИ ПРОКРУТКЕ =====
 function initScrollAnimation() {
-    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .rsvp');
+    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .rsvp');
     
     if (!blocks.length) return;
     
