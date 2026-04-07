@@ -1477,8 +1477,13 @@ footer p {
         margin-bottom: 28px;
     }
 
+    .pet-dressup-board {
+        gap: 14px;
+    }
+
     .pet-calibration {
         gap: 6px;
+        width: min(390px, 100%);
     }
 
     .pet-calibration-toggle {
@@ -1523,6 +1528,7 @@ footer p {
     .pet-stage {
         width: min(390px, 100%);
         min-height: 560px;
+        padding-inline: 10px;
     }
 
     .pet-stage-note {
@@ -1561,6 +1567,104 @@ footer p {
 
     .pet-accessory-envelope {
         width: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pet-dressup-subtitle {
+        max-width: 320px;
+        margin-bottom: 22px;
+        font-size: 15px;
+        line-height: 1.42;
+    }
+
+    .pet-calibration {
+        width: min(330px, 100%);
+    }
+
+    .pet-calibration-toggle {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .pet-calibration-hint,
+    .pet-calibration-output {
+        max-width: 300px;
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .pet-item {
+        width: 84px;
+        height: 84px;
+    }
+
+    .pet-item-badge {
+        width: 84px;
+        height: 84px;
+    }
+
+    .pet-item-image {
+        width: 54px;
+        height: 54px;
+    }
+
+    .pet-item-envelope {
+        top: 10px;
+        left: 2px;
+    }
+
+    .pet-item-bow {
+        top: -2px;
+    }
+
+    .pet-item-bag {
+        top: 10px;
+        right: 2px;
+    }
+
+    .pet-stage {
+        width: min(330px, 100%);
+        min-height: 456px;
+        padding-inline: 0;
+    }
+
+    .pet-stage-note {
+        left: -2px;
+        top: 86px;
+    }
+
+    .pet-stage-note-arrow {
+        width: 34px;
+        height: 56px;
+    }
+
+    .pet-stage-note-arrow::after {
+        top: -4px;
+        left: 18px;
+        width: 6px;
+        height: 6px;
+    }
+
+    .pet-stage-note-text {
+        font-size: 31px;
+    }
+
+    .pet-model {
+        width: 212px;
+        margin-top: 132px;
+    }
+
+    .pet-accessory-bow {
+        width: 42px;
+    }
+
+    .pet-accessory-bag {
+        width: 52px;
+    }
+
+    .pet-accessory-envelope {
+        width: 46px;
     }
 }
 
