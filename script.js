@@ -49,27 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const envelope = document.getElementById('envelope');
     const coverPage = document.getElementById('coverPage');
     const invitePage = document.getElementById('invitePage');
-    const heartEls = document.querySelectorAll('.heart-one, .heart-two');
     const openSceneNames = document.querySelector('.open-scene-names');
+    
     if (!envelope) return;
+    
     let isEnvelopeOpening = false;
-
-    heartEls.forEach((el) => {
-        el.textContent = '♥';
-    });
-
+    
+    // Устанавливаем правильные имена в конверте
     if (openSceneNames) {
-        openSceneNames.innerHTML = 'Роман &amp;<br>Валерие';
+        openSceneNames.innerHTML = 'Павел &amp;<br>Бибизьяна';
     }
     
-    heartEls.forEach((el) => {
-        el.textContent = '\u2665';
-    });
-
-    if (openSceneNames) {
-        openSceneNames.innerHTML = '\u0420\u043e\u043c\u0430\u043d &amp;<br>\u0412\u0430\u043b\u0435\u0440\u0438\u0435';
-    }
-
     const openSound = new Audio('https://www.soundjay.com/misc/sounds/envelope-opening-01.mp3');
     openSound.load();
     
@@ -89,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isEnvelopeOpening = true;
         openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
         envelope.classList.add('opening');
-
+        
         setTimeout(() => {
             envelope.classList.add('open');
         }, 760);
@@ -108,22 +98,30 @@ function updateTimer() {
     const now = new Date();
     const diff = weddingDate - now;
     
-    if (diff > 0) {
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        
-        if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-        if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-        if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-        if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    if (!daysEl) return;
+    
+    if (diff <= 0) {
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        return;
     }
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    daysEl.textContent = days.toString().padStart(2, '0');
+    hoursEl.textContent = hours.toString().padStart(2, '0');
+    minutesEl.textContent = minutes.toString().padStart(2, '0');
+    secondsEl.textContent = seconds.toString().padStart(2, '0');
 }
 
 updateTimer();
@@ -364,21 +362,139 @@ function initScrollAnimation() {
     const observerBlocks = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Блок появился в зоне видимости
                 entry.target.classList.add('visible-scroll');
             } else {
-                // Блок ушел из зоны видимости
                 entry.target.classList.remove('visible-scroll');
             }
         });
-    }, { threshold: 0.2 }); // 20% блока видно - появляется, меньше 20% - исчезает
+    }, { threshold: 0.2 });
     
     blocks.forEach(block => {
         observerBlocks.observe(block);
     });
 }
 
-// Запускаем анимацию
+// ===== ПРОСТАЯ КАРУСЕЛЬ (100% РАБОТАЕТ) =====
+function initSimpleCarousel() {
+    const prevButtons = document.querySelectorAll('.simple-prev');
+    const nextButtons = document.querySelectorAll('.simple-next');
+    
+    function updateDots(track, currentIndex) {
+        const dotsContainer = track.parentNode.parentNode.querySelector('.simple-dots');
+        if (!dotsContainer) return;
+        
+        const slides = track.querySelectorAll('.simple-slide');
+        const dots = dotsContainer.querySelectorAll('.simple-dot');
+        
+        dots.forEach((dot, i) => {
+            if (i === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+    
+    function scrollToSlide(track, index) {
+        const slides = track.querySelectorAll('.simple-slide');
+        if (index < 0) index = 0;
+        if (index >= slides.length) index = slides.length - 1;
+        
+        const slide = slides[index];
+        if (slide) {
+            slide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            updateDots(track, index);
+        }
+    }
+    
+    function setupCarousel(track, prevBtn, nextBtn) {
+        const slides = track.querySelectorAll('.simple-slide');
+        if (slides.length === 0) return;
+        
+        let currentIndex = 0;
+        
+        // Создаём dots
+        const dotsContainer = track.parentNode.parentNode.querySelector('.simple-dots');
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('simple-dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', function() {
+                    scrollToSlide(track, i);
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        // Отслеживаем скролл
+        track.addEventListener('scroll', function() {
+            const scrollLeft = track.scrollLeft;
+            const slideWidth = slides[0].offsetWidth;
+            const gap = 15;
+            const newIndex = Math.round(scrollLeft / (slideWidth + gap));
+            if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
+                currentIndex = newIndex;
+                updateDots(track, currentIndex);
+            }
+        });
+        
+        // Кнопки
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                const slidesList = track.querySelectorAll('.simple-slide');
+                const scrollLeft = track.scrollLeft;
+                const slideWidth = slidesList[0].offsetWidth;
+                const gap = 15;
+                const current = Math.round(scrollLeft / (slideWidth + gap));
+                if (current > 0) {
+                    scrollToSlide(track, current - 1);
+                }
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                const slidesList = track.querySelectorAll('.simple-slide');
+                const scrollLeft = track.scrollLeft;
+                const slideWidth = slidesList[0].offsetWidth;
+                const gap = 15;
+                const current = Math.round(scrollLeft / (slideWidth + gap));
+                if (current < slidesList.length - 1) {
+                    scrollToSlide(track, current + 1);
+                }
+            });
+        }
+        
+        // Начинаем с первого слайда
+        setTimeout(function() {
+            scrollToSlide(track, 0);
+        }, 100);
+    }
+    
+    // Настраиваем мужскую карусель
+    const maleTrack = document.querySelector('.simple-track[data-track="male"]');
+    const malePrev = document.querySelector('.simple-prev[data-carousel="male"]');
+    const maleNext = document.querySelector('.simple-next[data-carousel="male"]');
+    if (maleTrack) setupCarousel(maleTrack, malePrev, maleNext);
+    
+    // Настраиваем женскую карусель
+    const femaleTrack = document.querySelector('.simple-track[data-track="female"]');
+    const femalePrev = document.querySelector('.simple-prev[data-carousel="female"]');
+    const femaleNext = document.querySelector('.simple-next[data-carousel="female"]');
+    if (femaleTrack) setupCarousel(femaleTrack, femalePrev, femaleNext);
+}
+
+// Запускаем
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSimpleCarousel);
+} else {
+    initSimpleCarousel();
+}
+
+// Запускаем все анимации после загрузки
 document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimation();
+    initDressCodeCarousels();
 });
