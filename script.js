@@ -49,9 +49,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const envelope = document.getElementById('envelope');
     const coverPage = document.getElementById('coverPage');
     const invitePage = document.getElementById('invitePage');
-    
+    const heartEls = document.querySelectorAll('.heart-one, .heart-two');
+    const openSceneNames = document.querySelector('.open-scene-names');
     if (!envelope) return;
+    let isEnvelopeOpening = false;
+
+    heartEls.forEach((el) => {
+        el.textContent = '♥';
+    });
+
+    if (openSceneNames) {
+        openSceneNames.innerHTML = 'Роман &amp;<br>Валерие';
+    }
     
+    heartEls.forEach((el) => {
+        el.textContent = '\u2665';
+    });
+
+    if (openSceneNames) {
+        openSceneNames.innerHTML = '\u0420\u043e\u043c\u0430\u043d &amp;<br>\u0412\u0430\u043b\u0435\u0440\u0438\u0435';
+    }
+
     const openSound = new Audio('https://www.soundjay.com/misc/sounds/envelope-opening-01.mp3');
     openSound.load();
     
@@ -67,14 +85,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function openEnvelope() {
+        if (isEnvelopeOpening) return;
+        isEnvelopeOpening = true;
         openSound.play().catch(e => console.log('Звук не воспроизвелся:', e));
-        envelope.classList.add('open');
+        envelope.classList.add('opening');
+
+        setTimeout(() => {
+            envelope.classList.add('open');
+        }, 760);
         
         setTimeout(() => {
             if (coverPage) coverPage.classList.add('hidden');
             if (invitePage) invitePage.classList.add('visible');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 600);
+        }, 3200);
     }
 });
 
@@ -197,30 +221,62 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function updateTimelineHeartPosition() {
-        if (!timeline || !timelineItems.length) return;
+    const timelinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    timelinePath.setAttribute('d', 'M64 0 C96 70 96 170 64 240 C32 310 32 410 64 480 C96 550 96 650 64 720 C32 790 32 890 64 960 C96 1030 96 1130 64 1200');
+    const timelinePathLength = timelinePath.getTotalLength();
+    const timelineViewboxHeight = 1200;
+
+    let targetTimelineProgress = 0;
+    let currentTimelineProgress = 0;
+    let heartAnimationFrame = null;
+
+    function getTimelineProgress() {
+        if (!timeline) return 0;
+        const timelineRect = timeline.getBoundingClientRect();
+        const viewportAnchor = window.innerHeight * 0.45;
+        const rawProgress = (viewportAnchor - timelineRect.top) / Math.max(timelineRect.height, 1);
+        return Math.min(Math.max(rawProgress, 0), 1);
+    }
+
+    function applyTimelineHeartPosition(progress) {
+        if (!timeline) return;
 
         const timelineRect = timeline.getBoundingClientRect();
-        const trackPadding = 24;
-        const viewportAnchor = window.innerHeight * 0.45;
-        const totalScrollable = Math.max(timelineRect.height - trackPadding * 2, 1);
-        const progress = Math.min(
-            Math.max((viewportAnchor - timelineRect.top - trackPadding) / totalScrollable, 0),
-            1
-        );
-        const relativeTop = trackPadding + (totalScrollable * progress);
-        const waveTurns = 5;
-        const waveOffset = Math.sin(progress * Math.PI * waveTurns) * 32;
+        const pathPoint = timelinePath.getPointAtLength(timelinePathLength * progress);
+        const scaleY = timelineRect.height / timelineViewboxHeight;
+        const relativeTop = pathPoint.y * scaleY;
+        const pathCenterX = 64;
+        const waveOffset = pathPoint.x - pathCenterX;
 
-        timeline.style.setProperty('--heart-top', `${relativeTop}px`);
-        timeline.style.setProperty('--heart-offset-x', `${waveOffset}px`);
+        timeline.style.setProperty('--heart-top', `${relativeTop.toFixed(2)}px`);
+        timeline.style.setProperty('--heart-offset-x', `${waveOffset.toFixed(2)}px`);
+    }
+
+    function animateTimelineHeart() {
+        const delta = targetTimelineProgress - currentTimelineProgress;
+
+        if (Math.abs(delta) < 0.001) {
+            currentTimelineProgress = targetTimelineProgress;
+            applyTimelineHeartPosition(currentTimelineProgress);
+            heartAnimationFrame = null;
+            return;
+        }
+
+        currentTimelineProgress += delta * 0.18;
+        applyTimelineHeartPosition(currentTimelineProgress);
+        heartAnimationFrame = requestAnimationFrame(animateTimelineHeart);
+    }
+
+    function scheduleTimelineHeartUpdate() {
+        targetTimelineProgress = getTimelineProgress();
+        if (heartAnimationFrame !== null) return;
+        heartAnimationFrame = requestAnimationFrame(animateTimelineHeart);
     }
     
     function updateHeartColors() {
-        const items = document.querySelectorAll('.timeline-item');
         const windowHeight = window.innerHeight;
         
-        items.forEach(item => {
+        timelineItems.forEach(item => {
             const rect = item.getBoundingClientRect();
             const itemCenter = rect.top + rect.height / 2;
             const viewportCenter = windowHeight / 2;
@@ -234,13 +290,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.classList.remove('active');
             }
         });
-
-        updateTimelineHeartPosition();
     }
     
-    window.addEventListener('scroll', updateHeartColors);
-    window.addEventListener('resize', updateHeartColors);
+    function handleTimelineScrollFrame() {
+        updateHeartColors();
+        scheduleTimelineHeartUpdate();
+    }
+
+    window.addEventListener('scroll', handleTimelineScrollFrame, { passive: true });
+    window.addEventListener('resize', handleTimelineScrollFrame);
     updateHeartColors();
+    scheduleTimelineHeartUpdate();
 });
 
 // ===== АНИМАЦИЯ БЛОКОВ ОРГАНИЗАЦИОННЫХ МОМЕНТОВ ДЛЯ МОБИЛЬНЫХ =====

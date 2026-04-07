@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,27 +19,39 @@
     <div class="cover-page" id="coverPage">
         <div class="envelope-wrapper">
             <div class="envelope-css" id="envelope" role="button" tabindex="0" aria-label="Открыть приглашение">
-                <div class="envelope-css-flap"></div>
-                <div class="envelope-css-body">
-                    <div class="envelope-css-heart">
-                        <i class="fas fa-heart"></i>
-                    </div>
+                <div class="mockup-envelope" aria-hidden="true">
+                    <img class="mockup-part mockup-part-left" src="img/_1.svg" alt="">
+                    <img class="mockup-part mockup-part-top" src="img/_2-open.svg" alt="">
+                    <img class="mockup-part mockup-part-bottom" src="img/_2.svg" alt="">
+                    <img class="mockup-part mockup-part-right" src="img/_3.svg" alt="">
                 </div>
-                <div class="envelope-css-letter">
-                    <div class="letter-inner">
-                        <p class="letter-save">SAVE THE DATE</p>
-                        <h3 class="letter-names">Павел & Бибизьяна</h3>
-                        <p class="letter-date">2 августа 2026</p>
-                    </div>
+                <p class="envelope-top-text">Для вас<br>кое-что есть ...</p>
+                <div class="wax-seal">открыть</div>
+                <div class="envelope-bottom-text">
+                    <p class="bottom-script">С любовью<br>и надеждой!</p>
+                    <p class="bottom-date">08.08.2026</p>
                 </div>
-                <div class="envelope-css-text">
-                    <span>НАЖМИТЕ, ЧТОБЫ ОТКРЫТЬ</span>
+                <div class="open-letter-scene" aria-hidden="true">
+                    <p class="open-scene-text">время пронеслось<br>незаметно и у этих двух<br>милых деток скоро<br>свадьба...</p>
+                    <div class="open-scene-hearts">
+                        <span class="heart-one">♥</span>
+                        <span class="heart-two">♥</span>
+                    </div>
+                    <div class="polaroid-stack">
+                        <figure class="polaroid polaroid-left">
+                            <img src="img/Group_173_2_1.png" alt="" loading="eager">
+                        </figure>
+                        <figure class="polaroid polaroid-right">
+                            <img src="img/Group_172_6_1.png" alt="" loading="eager">
+                        </figure>
+                    </div>
+                    <div class="open-scene-question">?</div>
+                    <p class="open-scene-names">Роман &amp;<br>Валерие</p>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- ОСНОВНОЙ САЙТ (изначально скрыт) -->
+<!-- ОСНОВНОЙ САЙТ (изначально скрыт) -->
     <div class="invite-page" id="invitePage">
         <!-- Главный экран -->
         <section class="hero">
