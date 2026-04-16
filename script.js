@@ -45,12 +45,13 @@ class EnvelopeIntro {
         this.storageKey = storageKey;
         this.trigger = root?.querySelector('#envelopeTrigger');
         this.button = root?.querySelector('#envelopeOpenButton');
+        this.panel = root?.querySelector('.envelope-intro__panel');
         this.isOpened = false;
         this.isAnimating = false;
         this.openTimeout = null;
         this.animationDuration = this.getAnimationDuration();
 
-        if (!this.root || !this.trigger || !this.button) return;
+        if (!this.root || !this.trigger || !this.button || !this.panel) return;
 
         if (sessionStorage.getItem(this.storageKey) === '1') {
             this.finishImmediately();
@@ -58,6 +59,7 @@ class EnvelopeIntro {
         }
 
         document.body.classList.add('intro-active');
+        this.setResponsiveScale();
         this.bindEvents();
     }
 
@@ -65,7 +67,7 @@ class EnvelopeIntro {
         const duration = getComputedStyle(this.root)
             .getPropertyValue('--intro-open-duration')
             .trim();
-        const fallbackMs = 1450;
+        const fallbackMs = 2000;
 
         if (!duration) return fallbackMs;
         if (duration.endsWith('ms')) return parseFloat(duration);
@@ -76,10 +78,36 @@ class EnvelopeIntro {
     bindEvents() {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleKeydown = this.handleKeydown.bind(this);
+        this.handleResize = this.setResponsiveScale.bind(this);
 
         this.trigger.addEventListener('click', this.handleOpen);
         this.button.addEventListener('click', this.handleOpen);
         this.trigger.addEventListener('keydown', this.handleKeydown);
+        window.addEventListener('resize', this.handleResize, { passive: true });
+        window.visualViewport?.addEventListener('resize', this.handleResize, { passive: true });
+    }
+
+    setResponsiveScale() {
+        if (!this.panel) return;
+
+        const viewport = window.visualViewport || window;
+        const viewportWidth = viewport.width || window.innerWidth;
+        const viewportHeight = viewport.height || window.innerHeight;
+        const isPortraitTablet = window.matchMedia('(orientation: portrait) and (max-width: 1199px)').matches;
+        const isCompactWidth = window.matchMedia('(max-width: 640px)').matches;
+        const isLowHeight = window.matchMedia('(max-height: 620px)').matches;
+        const isCompactEnvelope = isCompactWidth || isPortraitTablet || isLowHeight;
+        const edgePadding = isCompactEnvelope ? 0 : Math.min(48, viewportWidth * 0.03);
+        const safeWidth = Math.max(viewportWidth - edgePadding, 240);
+        const safeHeight = Math.max(viewportHeight - edgePadding, 260);
+        const panelWidth = this.panel.offsetWidth || 320;
+        const panelHeight = this.panel.offsetHeight || 540;
+        const widthScale = safeWidth / panelWidth;
+        const heightScale = safeHeight / panelHeight;
+        const nextScale = Math.min(widthScale, heightScale);
+        const scale = Math.max(nextScale, 0.34);
+
+        this.panel.style.setProperty('--intro-panel-scale', scale.toFixed(3));
     }
 
     handleKeydown(event) {
