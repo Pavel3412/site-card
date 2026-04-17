@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Cormorant+Garamond:wght@300;400;500;600&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -29,10 +29,10 @@
                 кое-что есть ...
             </p>
             <div class="envelope-intro__envelope" id="envelopeTrigger" role="button" tabindex="0" aria-label="Открыть приглашение">
-                <img class="envelope-intro__piece envelope-intro__piece--left" src="img/_3.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--right" src="img/_1.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--bottom" src="img/_2.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--top" src="img/_2-open.svg" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--left" src="img/envelope/left.svg" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--right" src="img/envelope/right.svg" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--bottom" src="img/envelope/bottom.svg" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--top" src="img/envelope/top-open.svg" alt="" aria-hidden="true">
                 <img class="envelope-intro__seal" src="img/IMG_5400_2_1.png" alt="" aria-hidden="true">
             </div>
             <button class="envelope-intro__open-button" id="envelopeOpenButton" type="button">открыть</button>
@@ -47,8 +47,7 @@
         <section class="hero">
             <div class="hero-content">
                 <p class="hero-greeting">
-                    Если эта ссылка попала к вам, значит,<br>
-                    вы занимаете важное место в нашей жизни
+                    Совсем скоро мы станем семьёй и хотим разделить этот день с теми, кто особенно дорог
                 </p>
                 <div class="hero-photo-intro">
                     <div class="hero-photo-intro__frame" aria-label="Коллаж с Павлом и Ксенией">
@@ -69,16 +68,25 @@
                     <span class="names-line">Ксения</span>
                 </h1>
                 <p class="hero-date">2 августа 2026</p>
+                <div class="music-cue">
+                    <p class="music-cue__text">Нажмите, чтобы погрузиться в нашу атмосферу</p>
+                    <svg class="music-cue__arrow" viewBox="0 0 150 74" aria-hidden="true">
+                        <path d="M18 16 C45 42 77 48 108 30"></path>
+                        <path d="M99 28 L111 28 L106 40"></path>
+                    </svg>
+                    <button id="musicToggleBtn" class="music-button music-heart-button" type="button" aria-label="Включить фоновую музыку" aria-pressed="false">
+                        <svg class="music-heart-button__heart" viewBox="0 0 120 110" aria-hidden="true">
+                            <path d="M60 99 C31 76 12 60 12 35 C12 19 24 9 39 9 C49 9 56 14 60 22 C64 14 71 9 81 9 C96 9 108 19 108 35 C108 60 89 76 60 99 Z"></path>
+                        </svg>
+                        <span class="music-heart-button__icon" aria-hidden="true">
+                            <i class="fa-solid fa-play" data-music-icon></i>
+                        </span>
+                    </button>
+                </div>
+                <audio id="weddingMusic" src="music/music.mp3" loop preload="none"></audio>
                 <p class="hero-invite">
-                    Мы решили официально стать той парой,<br>
-                    которая бесит всех своим счастьем,<br>
-                    и с радостью приглашаем вас разделить с нами<br>
-                    радость главного события в нашей жизни
+                    Мы с трепетом готовимся к дню, с которого начнётся наша семья. Нам будет очень тепло и радостно видеть вас рядом: обнимать, улыбаться, танцевать и прожить этот важный момент вместе.
                 </p>
-                <button id="musicToggleBtn" class="music-button" aria-label="Включить фоновую музыку">
-                    <i class="fas fa-music" aria-hidden="true"></i>
-                    <span>Включить музыку</span>
-                </button>
             </div>
         </section>
 

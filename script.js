@@ -176,7 +176,46 @@ function initEnvelopeIntro() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initEnvelopeIntro();
+    initMusicPlayer();
 });
+
+function initMusicPlayer() {
+    const button = document.getElementById('musicToggleBtn');
+    const audio = document.getElementById('weddingMusic');
+
+    if (!button || !audio) return;
+
+    const icon = button.querySelector('[data-music-icon]');
+
+    function setPlayerState(isPlaying) {
+        button.classList.toggle('playing', isPlaying);
+        button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+        button.setAttribute('aria-label', isPlaying ? 'Поставить музыку на паузу' : 'Включить фоновую музыку');
+
+        if (icon) {
+            icon.classList.toggle('fa-play', !isPlaying);
+            icon.classList.toggle('fa-pause', isPlaying);
+        }
+
+    }
+
+    button.addEventListener('click', async () => {
+        if (audio.paused) {
+            try {
+                await audio.play();
+            } catch (error) {
+                button.setAttribute('aria-label', 'Не удалось включить музыку');
+            }
+            return;
+        }
+
+        audio.pause();
+    });
+
+    audio.addEventListener('play', () => setPlayerState(true));
+    audio.addEventListener('pause', () => setPlayerState(false));
+    setPlayerState(false);
+}
 
 // ===== ФОРМА (отправка в Google Таблицу) =====
 const weddingForm = document.getElementById('weddingForm');
