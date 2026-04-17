@@ -582,6 +582,7 @@ function initPetDressup() {
         envelope: -14
     };
     const stage = board.querySelector('.pet-stage');
+    const modelScene = board.querySelector('.pet-model-scene');
     const calibrationToggle = document.getElementById('petCalibrationToggle');
     const calibrationHint = document.getElementById('petCalibrationHint');
     const calibrationOutput = document.getElementById('petCalibrationOutput');
@@ -760,7 +761,18 @@ function initPetDressup() {
 
         if (event.target.closest('.pet-item')) return;
 
-        const rect = stage.getBoundingClientRect();
+        const calibrationSurface = modelScene || stage;
+        const rect = calibrationSurface.getBoundingClientRect();
+
+        if (
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom
+        ) {
+            return;
+        }
+
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         const xPercent = Number(((x / rect.width) * 100).toFixed(2));

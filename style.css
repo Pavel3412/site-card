@@ -2043,7 +2043,7 @@ footer p {
     cursor: crosshair;
 }
 
-.pet-stage.is-calibrating .pet-model {
+.pet-stage.is-calibrating .pet-model-scene {
     filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0.04));
 }
 
@@ -2120,11 +2120,16 @@ footer p {
     transform: rotate(-8deg);
 }
 
-.pet-model {
+.pet-model-scene {
+    position: relative;
     width: min(360px, 66%);
+    margin: 168px auto 0;
+}
+
+.pet-model {
+    width: 100%;
     height: auto;
     display: block;
-    margin: 168px auto 0;
 }
 
 .pet-accessory {
@@ -2141,21 +2146,21 @@ footer p {
 }
 
 .pet-accessory-bow {
-    top: 39.04%;
-    left: 52.5%;
-    width: 68px;
+    top: 20.07%;
+    left: 54.44%;
+    width: 18.9%;
 }
 
 .pet-accessory-bag {
-    top: 66.25%;
-    left: 43.21%;
-    width: 90px;
+    top: 55.75%;
+    left: 37.93%;
+    width: 25%;
 }
 
 .pet-accessory-envelope {
-    top: 78.26%;
-    left: 55.54%;
-    width: 82px;
+    top: 71.5%;
+    left: 59.85%;
+    width: 22.8%;
 }
 
 @media (max-width: 768px) {
@@ -2239,21 +2244,9 @@ footer p {
         font-size: 36px;
     }
 
-    .pet-model {
+    .pet-model-scene {
         width: min(246px, 72%);
         margin-top: 156px;
-    }
-
-    .pet-accessory-bow {
-        width: 52px;
-    }
-
-    .pet-accessory-bag {
-        width: 64px;
-    }
-
-    .pet-accessory-envelope {
-        width: 56px;
     }
 }
 
@@ -2463,20 +2456,8 @@ footer p {
         font-size: 31px;
     }
 
-    .pet-model {
+    .pet-model-scene {
         width: 212px;
         margin-top: 132px;
-    }
-
-    .pet-accessory-bow {
-        width: 42px;
-    }
-
-    .pet-accessory-bag {
-        width: 52px;
-    }
-
-    .pet-accessory-envelope {
-        width: 46px;
     }
 }
