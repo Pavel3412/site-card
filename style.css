@@ -25,6 +25,10 @@
     --muted: #9b7a75;
     --muted-light: #c6ada8;
     --text-soft: #856b62;
+    --section-y: clamp(22px, 3.2vw, 32px);
+    --section-gap: 4px;
+    --title-rule-gap: 8px;
+    --title-content-gap: 20px;
 }
 
 * {
@@ -365,7 +369,7 @@ h1, h2, h3, .names, .section-title {
 }
 
 section {
-    padding: 60px 0;
+    padding: var(--section-y) 0;
 }
 
 .calendar-section,
@@ -385,11 +389,14 @@ section {
 }
 
 .section-title {
-    font-size: 36px;
+    font-size: clamp(32px, 4.4vw, 36px);
+    line-height: 1.08;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: var(--title-content-gap);
+    max-width: 100%;
+    overflow-wrap: break-word;
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 1.4px;
     position: relative;
 }
 
@@ -399,7 +406,7 @@ section {
     width: 60px;
     height: 1px;
     background: var(--accent);
-    margin: 20px auto 0;
+    margin: var(--title-rule-gap) auto 0;
 }
 
 .invite-page {
@@ -410,7 +417,7 @@ section {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--section-gap);
     width: min(840px, 100%);
     margin: 0 auto;
     background: transparent;
@@ -434,7 +441,7 @@ section {
 
 /* Главный экран */
 .hero {
-    min-height: 100vh;
+    min-height: auto;
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
@@ -543,7 +550,7 @@ section {
 .hero-invite {
     font-size: clamp(18px, 1.35vw, 23px);
     line-height: 1.65;
-    margin-bottom: 50px;
+    margin-bottom: 0;
     font-weight: 500;
     opacity: 0.95;
     text-shadow: none;
@@ -584,10 +591,6 @@ section {
     text-align: center;
 }
 
-.timer-section .section-title {
-    white-space: nowrap;
-}
-
 .timer {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -625,7 +628,6 @@ section {
 /* Календарь */
 .calendar-section {
     text-align: center;
-    padding-bottom: 88px;
 }
 
 .calendar-wrapper {
@@ -637,9 +639,10 @@ section {
 .calendar {
     background: transparent;
     border-radius: 20px;
-    padding: 25px 20px 30px;
+    padding: 0 20px 30px;
     box-shadow: none;
     border: none;
+    overflow: visible;
 }
 
 .calendar-header {
@@ -690,6 +693,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
 }
 
 .calendar-days .wedding-day {
@@ -704,6 +708,7 @@ section {
     align-items: center;
     justify-content: center;
     z-index: 1;
+    overflow: visible;
 }
 
 .calendar-days .wedding-day::before {
@@ -714,7 +719,7 @@ section {
     transform: translate(-50%, -50%);
     width: 100px !important;
     height: 100px !important;
-    background: url('img/obvodka.png') center/contain no-repeat;
+    background: url('img/optimized/obvodka.png') center/contain no-repeat;
     z-index: -1;
     animation: heartBeat 1.2s ease-in-out infinite;
     pointer-events: none;
@@ -743,7 +748,6 @@ section {
 /* Программа дня */
 .schedule {
     background: transparent;
-    padding: 60px 0;
 }
 
 .timeline {
@@ -968,6 +972,11 @@ section {
 .timeline-item:nth-child(4) { transition-delay: 0.2s; }
 .timeline-item:nth-child(5) { transition-delay: 0.26s; }
 
+.timeline-item:last-child,
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
 /* Место проведения */
 .location {
     background: transparent;
@@ -975,7 +984,7 @@ section {
 }
 
 .location-photo {
-    margin: 20px 0;
+    margin: 0 0 20px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -1185,7 +1194,7 @@ section {
 
 .rsvp-form {
     background: transparent;
-    padding: 30px 25px;
+    padding: 0 25px 30px;
     border-radius: 16px;
     box-shadow: none;
     border: none;
@@ -1484,7 +1493,7 @@ section {
 /* Подвал */
 footer {
     text-align: center;
-    padding: 40px 20px;
+    padding: 28px 20px;
     background: transparent;
     color: var(--text-soft);
     border-radius: 24px;
@@ -1506,6 +1515,13 @@ footer p {
 }
 /* Адаптация */
 @media (max-width: 420px) {
+    :root {
+        --section-y: 18px;
+        --section-gap: 4px;
+        --title-rule-gap: 7px;
+        --title-content-gap: 18px;
+    }
+
     body {
         padding: 16px;
     }
@@ -1518,6 +1534,13 @@ footer p {
 
     .site-background-video {
         transform: scale(1.1);
+    }
+
+    .section-title {
+        font-size: clamp(27px, 7.4vw, 30px);
+        line-height: 1.12;
+        letter-spacing: 0.9px;
+        padding: 0 8px;
     }
 
     .names {
@@ -1557,8 +1580,7 @@ footer p {
     }
 
     .timer-section .section-title {
-        font-size: clamp(30px, 7vw, 40px);
-        white-space: nowrap;
+        font-size: 30px;
     }
     
     .timer-item {
@@ -1674,8 +1696,8 @@ footer p {
     }
     
     .calendar-days .wedding-day::before {
-        width: 60px;
-        height: 60px;
+        width: 56px !important;
+        height: 56px !important;
     }
     
     .calendar-days span {
@@ -1882,6 +1904,7 @@ footer p {
     text-align: center;
     border: none;
     box-shadow: none;
+    overflow: visible;
 }
 
 .story,
@@ -1902,7 +1925,7 @@ footer p {
 
 .pet-dressup-subtitle {
     max-width: 680px;
-    margin: -12px auto 36px;
+    margin: 0 auto 28px;
     color: var(--text-soft);
     font-size: 18px;
     line-height: 1.5;
@@ -2344,8 +2367,12 @@ footer p {
         border-radius: 50% 50% 50% 50% / 180px 180px 180px 180px;
     }
 
+    .pet-dressup {
+        overflow: visible;
+    }
+
     .calendar-section {
-        padding-bottom: 112px;
+        padding-bottom: var(--section-y);
     }
 
     .calendar-note {
@@ -2369,8 +2396,8 @@ footer p {
     }
 
     .hero {
-        min-height: 100svh;
-        padding: 14px 0 36px;
+        min-height: auto;
+        padding: var(--section-y) 0;
     }
 
     .hero-content {
@@ -2379,7 +2406,7 @@ footer p {
 
     .pet-dressup-subtitle {
         max-width: 320px;
-        margin-bottom: 22px;
+        margin: 0 auto 20px;
         font-size: 15px;
         line-height: 1.42;
     }
