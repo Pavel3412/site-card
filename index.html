@@ -7,7 +7,6 @@
     <title>Павел & Ксения | Приглашение на свадьбу</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -16,9 +15,7 @@
 
 <body>
     <div class="site-background" aria-hidden="true">
-        <video class="site-background-video" autoplay muted loop playsinline preload="metadata">
-            <source src="videos/1.mp4" type="video/mp4">
-        </video>
+        <video class="site-background-video" autoplay muted loop playsinline preload="none" data-src="videos/1.mp4"></video>
     </div>
 
     <div class="envelope-intro" id="envelopeIntro" aria-hidden="false">
@@ -41,20 +38,20 @@
         </div>
     </div>
 
-    <div class="invite-page visible" id="invitePage">
+    <div class="invite-page" id="invitePage">
         <!-- Главный экран -->
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-photo-intro">
                     <div class="hero-photo-intro__frame" aria-label="Коллаж с Павлом и Ксенией">
                         <div class="hero-photo-intro__panel">
-                            <img src="img/optimized/hero-1.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="900" height="1600">
+                            <img src="img/optimized/hero-1.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="700" height="1244">
                         </div>
                         <div class="hero-photo-intro__panel">
-                            <img src="img/optimized/hero-2.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="900" height="1600">
+                            <img src="img/optimized/hero-2.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="700" height="1244">
                         </div>
                         <div class="hero-photo-intro__panel">
-                            <img src="img/optimized/hero-3.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="900" height="1600">
+                            <img src="img/optimized/hero-3.jpg" alt="" class="hero-photo-intro__image" loading="eager" width="700" height="1244">
                         </div>
                     </div>
                 </div>
@@ -66,10 +63,6 @@
                 <p class="hero-date">2 августа 2026</p>
                 <div class="music-cue">
                     <p class="music-cue__text">Нажмите, чтобы погрузиться в нашу атмосферу:</p>
-                    <svg class="music-cue__arrow" viewBox="0 0 150 74" aria-hidden="true">
-                        <path d="M18 16 C45 42 77 48 108 30"></path>
-                        <path d="M99 28 L111 28 L106 40"></path>
-                    </svg>
                     <button id="musicToggleBtn" class="music-button music-heart-button" type="button" aria-label="Включить фоновую музыку" aria-pressed="false">
                         <svg class="music-heart-button__heart" viewBox="0 0 120 110" aria-hidden="true">
                             <path d="M60 99 C31 76 12 60 12 35 C12 19 24 9 39 9 C49 9 56 14 60 22 C64 14 71 9 81 9 C96 9 108 19 108 35 C108 60 89 76 60 99 Z"></path>
@@ -141,7 +134,9 @@
                             </div>
                         </div>
                         <div class="timeline-heart">
-                            <i class="fas fa-heart"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 64 58" aria-hidden="true">
+                                <path d="M32 53.5C18.5 41.8 8 33 8 20.9 8 12.9 14.1 7 21.6 7c4.5 0 8.5 2.2 10.4 5.8C33.9 9.2 37.9 7 42.4 7 49.9 7 56 12.9 56 20.9c0 12.1-10.5 20.9-24 32.6Z"></path>
+                            </svg>
                         </div>
                         <div class="timeline-right">
                             <div class="timeline-content">
@@ -163,7 +158,9 @@
                             </div>
                         </div>
                         <div class="timeline-heart">
-                            <i class="fas fa-heart"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 64 58" aria-hidden="true">
+                                <path d="M32 53.5C18.5 41.8 8 33 8 20.9 8 12.9 14.1 7 21.6 7c4.5 0 8.5 2.2 10.4 5.8C33.9 9.2 37.9 7 42.4 7 49.9 7 56 12.9 56 20.9c0 12.1-10.5 20.9-24 32.6Z"></path>
+                            </svg>
                         </div>
                         <div class="timeline-right">
                             <div class="timeline-content">
@@ -189,7 +186,9 @@
                             </div>
                         </div>
                         <div class="timeline-heart">
-                            <i class="fas fa-heart"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 64 58" aria-hidden="true">
+                                <path d="M32 53.5C18.5 41.8 8 33 8 20.9 8 12.9 14.1 7 21.6 7c4.5 0 8.5 2.2 10.4 5.8C33.9 9.2 37.9 7 42.4 7 49.9 7 56 12.9 56 20.9c0 12.1-10.5 20.9-24 32.6Z"></path>
+                            </svg>
                         </div>
                         <div class="timeline-right">
                             <div class="timeline-content">
@@ -211,7 +210,9 @@
                             </div>
                         </div>
                         <div class="timeline-heart">
-                            <i class="fas fa-heart"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 64 58" aria-hidden="true">
+                                <path d="M32 53.5C18.5 41.8 8 33 8 20.9 8 12.9 14.1 7 21.6 7c4.5 0 8.5 2.2 10.4 5.8C33.9 9.2 37.9 7 42.4 7 49.9 7 56 12.9 56 20.9c0 12.1-10.5 20.9-24 32.6Z"></path>
+                            </svg>
                         </div>
                         <div class="timeline-right">
                             <div class="timeline-content">
@@ -232,7 +233,9 @@
                             </div>
                         </div>
                         <div class="timeline-heart">
-                            <i class="fas fa-heart"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 64 58" aria-hidden="true">
+                                <path d="M32 53.5C18.5 41.8 8 33 8 20.9 8 12.9 14.1 7 21.6 7c4.5 0 8.5 2.2 10.4 5.8C33.9 9.2 37.9 7 42.4 7 49.9 7 56 12.9 56 20.9c0 12.1-10.5 20.9-24 32.6Z"></path>
+                            </svg>
                         </div>
                         <div class="timeline-right">
                             <div class="timeline-content">
@@ -250,12 +253,16 @@
             <div class="container">
                 <h2 class="section-title">Место встречи</h2>
                 <div class="location-photo">
-                    <img src="img/optimized/location.jpg" alt="Оранжерея" class="location-img" loading="lazy" width="1200" height="800">
+                    <img src="img/optimized/location.jpg" alt="Оранжерея" class="location-img" loading="lazy" width="960" height="640">
                 </div>
                 <p class="location-name">🌿 Оранжерея "Зимёнки Парк"</p>
                 <p class="location-address">Нижегородская обл, д. Зименки, ул. Парковая, д. 1</p>
                 <a href="https://yandex.ru/maps/-/CPFjiJy9" class="map-button" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-map-marker-alt"></i> Открыть в картах
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 21s6-4.35 6-10a6 6 0 1 0-12 0c0 5.65 6 10 6 10Z"></path>
+                        <circle cx="12" cy="11" r="2.5"></circle>
+                    </svg>
+                    Открыть в картах
                 </a>
                 <p class="location-note">
                     Если вы планируете приехать на машине — на площадке предусмотрена парковка
@@ -355,7 +362,13 @@
                 <ul class="info-list">
                     <li class="info-item">
                         <div class="info-icon">
-                            <i class="fas fa-gift"></i>
+                            <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 10h16v10H4z"></path>
+                                <path d="M12 10v10"></path>
+                                <path d="M2.5 6.5h19v3.5h-19z"></path>
+                                <path d="M12 6.5H8.8a2 2 0 1 1 0-4c2 0 3.2 2.3 3.2 4Z"></path>
+                                <path d="M12 6.5h3.2a2 2 0 1 0 0-4c-2 0-3.2 2.3-3.2 4Z"></path>
+                            </svg>
                         </div>
                         <div class="info-content">
                             <h3>О подарках</h3>
@@ -364,7 +377,11 @@
                     </li>
                     <li class="info-item">
                         <div class="info-icon">
-                            <i class="fas fa-seedling"></i>
+                            <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 20v-6.5"></path>
+                                <path d="M11.8 13c-3 0-5.3-2.3-5.3-5.3 3 0 5.3 2.3 5.3 5.3Z"></path>
+                                <path d="M12.2 15c0-3 2.3-5.3 5.3-5.3 0 3-2.3 5.3-5.3 5.3Z"></path>
+                            </svg>
                         </div>
                         <div class="info-content">
                             <h3>О цветах</h3>
@@ -374,7 +391,11 @@
                     </li>
                     <li class="info-item">
                         <div class="info-icon">
-                            <i class="fas fa-child"></i>
+                            <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="8.2" r="2.8"></circle>
+                                <path d="M8.6 20v-2.3a3.4 3.4 0 0 1 6.8 0V20"></path>
+                                <path d="M9.5 13.2h5"></path>
+                            </svg>
                         </div>
                         <div class="info-content">
                             <h3>О детях</h3>
@@ -384,7 +405,12 @@
                     </li>
                     <li class="info-item">
                         <div class="info-icon">
-                            <i class="fas fa-champagne-glasses"></i>
+                            <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 3.5h10v3a5 5 0 0 1-10 0z"></path>
+                                <path d="M12 11.5v6"></path>
+                                <path d="M9 20.5h6"></path>
+                                <path d="M5.5 3.5h13"></path>
+                            </svg>
                         </div>
                         <div class="info-content">
                             <h3>О формате праздника</h3>
@@ -399,7 +425,7 @@
         <section class="photo-interlude" aria-label="Нежная деталь с руками">
             <div class="container">
                 <figure class="photo-interlude__frame">
-                    <img src="img/ruki1.JPG" alt="Руки Павла и Ксении" class="photo-interlude__image" loading="lazy" width="1344" height="350">
+                    <img src="img/ruki1.JPG" alt="Руки Павла и Ксении" class="photo-interlude__image" loading="lazy" width="1000" height="260">
                 </figure>
             </div>
         </section>
@@ -498,17 +524,21 @@
                     <p>Мы поможем, подскажем и сориентируем по всем важным моментам.</p>
                 </div>
                 <figure class="organizer-contact__photo">
-                    <img src="img/org.JPG" alt="Организатор Екатерина" class="organizer-contact__image" loading="lazy">
+                    <img src="img/org.JPG" alt="Организатор Екатерина" class="organizer-contact__image" loading="lazy" width="720" height="720">
                 </figure>
                 <div class="organizer-contact__details">
                     <p class="organizer-contact__name">Екатерина, организатор</p>
                     <div class="organizer-contact__actions">
                         <a href="tel:+79867477480" class="map-button organizer-contact__button">
-                            <i class="fas fa-phone"></i>
+                            <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M5 4.5h4l2 5-2.6 1.7a14.4 14.4 0 0 0 4.4 4.4L14.5 13l5 2v4a2 2 0 0 1-2.2 2A16.8 16.8 0 0 1 3 6.7 2 2 0 0 1 5 4.5Z"></path>
+                            </svg>
                             +7 986 747 7480
                         </a>
                         <a href="https://vk.ru/ashitok.kate" class="map-button organizer-contact__button" target="_blank" rel="noopener noreferrer">
-                            <i class="fa-brands fa-vk"></i>
+                            <svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4.7 7.8h3.1c.1 0 .3.1.3.2.3 1 .8 1.9 1.5 2.8.7.8 1.2 1.1 1.5 1.1.2 0 .3-.2.3-.5V8.2c0-.2.2-.4.4-.4h2.8c.2 0 .4.2.4.4v3c0 .2.1.3.3.3.2 0 .6-.3 1.2-.9.7-.7 1.3-1.6 1.7-2.6.1-.2.2-.2.4-.2h3.1c.2 0 .3 0 .4.1.1.1.1.2.1.4-.1.6-.7 1.6-1.7 3-.5.6-.8 1-.8 1.2 0 .1.1.3.4.6.2.2.4.4.6.6.8.8 1.4 1.5 1.7 2.1.1.2.1.4 0 .6-.1.1-.3.2-.6.2h-2.8c-.3 0-.6-.1-.8-.3l-1.3-1.3c-.4-.4-.6-.5-.9-.5-.2 0-.3.2-.3.5v1.1c0 .3-.1.5-.2.7-.1.1-.3.2-.6.2h-1.3c-1.1 0-2.2-.4-3.2-1.1-1-.7-1.9-1.7-2.7-2.9C5.1 11.1 4.6 9.5 4.4 8c0-.1 0-.2.1-.3.1 0 .1-.1.2-.1Z"></path>
+                            </svg>
                             Написать в VK
                         </a>
                     </div>

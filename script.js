@@ -6,6 +6,10 @@ function resetPageScroll() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 }
 
+function dispatchIntroOpenEvent() {
+    document.dispatchEvent(new Event('wedding:intro-open'));
+}
+
 // ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
 function updateTimer() {
     const weddingDate = new Date(2026, 7, 2, 14, 0);
@@ -155,6 +159,7 @@ class EnvelopeIntro {
             this.root.hidden = true;
             resetPageScroll();
             this.onOpenComplete();
+            dispatchIntroOpenEvent();
         }, 700);
     }
 
@@ -165,6 +170,7 @@ class EnvelopeIntro {
         this.root.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('intro-active');
         this.onOpenComplete();
+        dispatchIntroOpenEvent();
     }
 }
 
@@ -189,17 +195,40 @@ function initEnvelopeIntro() {
 function initBackgroundVideoFallback() {
     const background = document.querySelector('.site-background');
     const video = background?.querySelector('.site-background-video');
+    const intro = document.getElementById('envelopeIntro');
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCompactViewport = window.matchMedia('(max-width: 767px)').matches;
+    const shouldDisableVideo = prefersReducedMotion
+        || isCompactViewport
+        || Boolean(connection?.saveData)
+        || connection?.effectiveType === 'slow-2g'
+        || connection?.effectiveType === '2g';
 
     if (!background || !video) return;
 
     let playAttemptInFlight = false;
+    let sourceLoaded = false;
+    let bootstrapScheduled = false;
 
     function setStaticBackground(isStatic) {
         background.classList.toggle('is-static', isStatic);
     }
 
+    function ensureSourceLoaded() {
+        if (sourceLoaded) return true;
+
+        const src = video.dataset.src?.trim();
+        if (!src) return false;
+
+        video.src = src;
+        video.load();
+        sourceLoaded = true;
+        return true;
+    }
+
     async function tryStartVideo() {
-        if (playAttemptInFlight) return;
+        if (playAttemptInFlight || !ensureSourceLoaded()) return;
         playAttemptInFlight = true;
 
         try {
@@ -220,7 +249,30 @@ function initBackgroundVideoFallback() {
     }
 
     function syncBackgroundState() {
+        if (!sourceLoaded) {
+            setStaticBackground(true);
+            return;
+        }
+
         setStaticBackground(video.paused || video.ended || video.readyState < 2);
+    }
+
+    function scheduleVideoBootstrap() {
+        if (shouldDisableVideo || bootstrapScheduled) return;
+
+        bootstrapScheduled = true;
+
+        const startVideo = () => {
+            bootstrapScheduled = false;
+            tryStartVideo();
+        };
+
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(startVideo, { timeout: 1400 });
+            return;
+        }
+
+        window.setTimeout(startVideo, 260);
     }
 
     video.muted = true;
@@ -233,16 +285,33 @@ function initBackgroundVideoFallback() {
     video.addEventListener('pause', syncBackgroundState);
     video.addEventListener('stalled', () => setStaticBackground(true));
     video.addEventListener('suspend', syncBackgroundState);
+    video.addEventListener('error', () => setStaticBackground(true));
     document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden' && !video.paused) {
+            video.pause();
+            return;
+        }
+
         if (document.visibilityState === 'visible') {
-            tryStartVideo();
+            scheduleVideoBootstrap();
         }
     });
-    window.addEventListener('pageshow', tryStartVideo);
-    document.addEventListener('touchstart', tryStartVideo, { passive: true, once: true });
+    window.addEventListener('pageshow', scheduleVideoBootstrap);
 
-    window.setTimeout(syncBackgroundState, 120);
-    window.setTimeout(tryStartVideo, 160);
+    if (shouldDisableVideo) {
+        setStaticBackground(true);
+        return;
+    }
+
+    document.addEventListener('wedding:intro-open', scheduleVideoBootstrap, { once: true });
+
+    if (intro && !intro.hidden && !intro.classList.contains('is-hidden')) {
+        setStaticBackground(true);
+        return;
+    }
+
+    setStaticBackground(true);
+    scheduleVideoBootstrap();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -617,7 +686,7 @@ window.addEventListener('resize', function() {
 
 // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ И ИСЧЕЗНОВЕНИЯ БЛОКОВ ПРИ ПРОКРУТКЕ =====
 function initScrollAnimation() {
-    const blocks = document.querySelectorAll('.story, .organizer-contact, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .photo-interlude, .rsvp');
+    const blocks = document.querySelectorAll('.organizer-contact, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .photo-interlude, .rsvp');
     
     if (!blocks.length) return;
 
