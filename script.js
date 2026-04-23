@@ -186,7 +186,67 @@ function initEnvelopeIntro() {
     });
 }
 
+function initBackgroundVideoFallback() {
+    const background = document.querySelector('.site-background');
+    const video = background?.querySelector('.site-background-video');
+
+    if (!background || !video) return;
+
+    let playAttemptInFlight = false;
+
+    function setStaticBackground(isStatic) {
+        background.classList.toggle('is-static', isStatic);
+    }
+
+    async function tryStartVideo() {
+        if (playAttemptInFlight) return;
+        playAttemptInFlight = true;
+
+        try {
+            const playResult = video.play();
+
+            if (playResult && typeof playResult.then === 'function') {
+                await playResult;
+            }
+
+            window.setTimeout(() => {
+                setStaticBackground(video.paused || video.readyState < 2);
+            }, 180);
+        } catch (error) {
+            setStaticBackground(true);
+        } finally {
+            playAttemptInFlight = false;
+        }
+    }
+
+    function syncBackgroundState() {
+        setStaticBackground(video.paused || video.ended || video.readyState < 2);
+    }
+
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+
+    video.addEventListener('playing', () => setStaticBackground(false));
+    video.addEventListener('canplay', syncBackgroundState);
+    video.addEventListener('pause', syncBackgroundState);
+    video.addEventListener('stalled', () => setStaticBackground(true));
+    video.addEventListener('suspend', syncBackgroundState);
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            tryStartVideo();
+        }
+    });
+    window.addEventListener('pageshow', tryStartVideo);
+    document.addEventListener('touchstart', tryStartVideo, { passive: true, once: true });
+
+    window.setTimeout(syncBackgroundState, 120);
+    window.setTimeout(tryStartVideo, 160);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initBackgroundVideoFallback();
     initEnvelopeIntro();
     initMusicPlayer();
 });

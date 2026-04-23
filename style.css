@@ -102,6 +102,25 @@ body.intro-active {
     inset: 0;
     z-index: -2;
     overflow: hidden;
+    background:
+        linear-gradient(180deg, #f5efe7 0%, #f8f3ed 100%);
+}
+
+.site-background::before {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    opacity: 0;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.55) 12%, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, 0.28) 42%, rgba(255, 255, 255, 0) 58%),
+        linear-gradient(72deg, rgba(239, 227, 210, 0.54) 14%, rgba(255, 255, 255, 0.08) 34%, rgba(231, 216, 202, 0.46) 50%, rgba(255, 255, 255, 0.06) 66%),
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 34%),
+        radial-gradient(circle at 78% 30%, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 30%),
+        radial-gradient(circle at 55% 78%, rgba(232, 220, 208, 0.44), rgba(232, 220, 208, 0) 32%),
+        linear-gradient(180deg, rgba(251, 247, 241, 0.96), rgba(244, 238, 230, 0.92));
+    transform: scale(1.06);
+    transition: opacity 0.35s ease;
+    pointer-events: none;
 }
 
 .site-background::after {
@@ -122,6 +141,15 @@ body.intro-active {
     filter: saturate(0.74) brightness(1.12) contrast(0.82) sepia(0.1) hue-rotate(-8deg);
     opacity: 0.76;
     transform: scale(1.05);
+    transition: opacity 0.35s ease;
+}
+
+.site-background.is-static::before {
+    opacity: 1;
+}
+
+.site-background.is-static .site-background-video {
+    opacity: 0;
 }
 
 /* EnvelopeIntro */
