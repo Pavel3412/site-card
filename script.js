@@ -197,7 +197,8 @@ function initMusicPlayer() {
 
     if (!button || !audio) return;
 
-    const icon = button.querySelector('[data-music-icon]');
+    const playIcon = button.querySelector('[data-music-icon-play]');
+    const pauseIcon = button.querySelector('[data-music-icon-pause]');
     audio.loop = true;
 
     function setPlayerState(isPlaying) {
@@ -205,9 +206,9 @@ function initMusicPlayer() {
         button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
         button.setAttribute('aria-label', isPlaying ? 'Поставить музыку на паузу' : 'Включить фоновую музыку');
 
-        if (icon) {
-            icon.classList.toggle('fa-play', !isPlaying);
-            icon.classList.toggle('fa-pause', isPlaying);
+        if (playIcon && pauseIcon) {
+            playIcon.setAttribute('aria-hidden', isPlaying ? 'true' : 'false');
+            pauseIcon.setAttribute('aria-hidden', isPlaying ? 'false' : 'true');
         }
 
     }

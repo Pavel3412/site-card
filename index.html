@@ -30,10 +30,10 @@
                 значит...
             </p>
             <div class="envelope-intro__envelope" id="envelopeTrigger" role="button" tabindex="0" aria-label="Открыть приглашение">
-                <img class="envelope-intro__piece envelope-intro__piece--left" src="img/envelope/left.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--right" src="img/envelope/right.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--bottom" src="img/envelope/bottom.svg" alt="" aria-hidden="true">
-                <img class="envelope-intro__piece envelope-intro__piece--top" src="img/envelope/top-open.svg" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--left" src="img/envelope/left.svg?v=2" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--right" src="img/envelope/right.svg?v=2" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--bottom" src="img/envelope/bottom.svg?v=2" alt="" aria-hidden="true">
+                <img class="envelope-intro__piece envelope-intro__piece--top" src="img/envelope/top-open.svg?v=2" alt="" aria-hidden="true">
                 <img class="envelope-intro__seal" src="img/pechat.png" alt="" aria-hidden="true">
             </div>
             <button class="envelope-intro__open-button" id="envelopeOpenButton" type="button">открыть</button>
@@ -75,7 +75,12 @@
                             <path d="M60 99 C31 76 12 60 12 35 C12 19 24 9 39 9 C49 9 56 14 60 22 C64 14 71 9 81 9 C96 9 108 19 108 35 C108 60 89 76 60 99 Z"></path>
                         </svg>
                         <span class="music-heart-button__icon" aria-hidden="true">
-                            <i class="fa-solid fa-play" data-music-icon></i>
+                            <svg class="music-heart-button__glyph music-heart-button__glyph--play" viewBox="0 0 24 24" data-music-icon-play>
+                                <path d="M9 7.2v9.6a.75.75 0 0 0 1.14.644l7.2-4.8a.75.75 0 0 0 0-1.248l-7.2-4.8A.75.75 0 0 0 9 7.2Z"></path>
+                            </svg>
+                            <svg class="music-heart-button__glyph music-heart-button__glyph--pause" viewBox="0 0 24 24" data-music-icon-pause>
+                                <path d="M8.25 7A1.25 1.25 0 0 1 9.5 8.25v7.5A1.25 1.25 0 0 1 8.25 17h-.5A1.25 1.25 0 0 1 6.5 15.75v-7.5A1.25 1.25 0 0 1 7.75 7h.5Zm8 0a1.25 1.25 0 0 1 1.25 1.25v7.5A1.25 1.25 0 0 1 16.25 17h-.5a1.25 1.25 0 0 1-1.25-1.25v-7.5A1.25 1.25 0 0 1 15.75 7h.5Z"></path>
+                            </svg>
                         </span>
                     </button>
                 </div>
