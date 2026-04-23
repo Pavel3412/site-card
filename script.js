@@ -1,4 +1,12 @@
-﻿// ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
+﻿if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+function resetPageScroll() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
+
+// ===== ТАЙМЕР ОБРАТНОГО ОТСЧЕТА =====
 function updateTimer() {
     const weddingDate = new Date(2026, 7, 2, 14, 0);
     const now = new Date();
@@ -58,6 +66,8 @@ class EnvelopeIntro {
             return;
         }
 
+        resetPageScroll();
+        window.setTimeout(resetPageScroll, 0);
         document.body.classList.add('intro-active');
         this.setResponsiveScale();
         this.bindEvents();
@@ -139,9 +149,11 @@ class EnvelopeIntro {
 
         this.root.setAttribute('aria-hidden', 'true');
         this.root.classList.add('is-hidden');
+        resetPageScroll();
 
         window.setTimeout(() => {
             this.root.hidden = true;
+            resetPageScroll();
             this.onOpenComplete();
         }, 700);
     }
@@ -186,6 +198,7 @@ function initMusicPlayer() {
     if (!button || !audio) return;
 
     const icon = button.querySelector('[data-music-icon]');
+    audio.loop = true;
 
     function setPlayerState(isPlaying) {
         button.classList.toggle('playing', isPlaying);
@@ -214,6 +227,10 @@ function initMusicPlayer() {
 
     audio.addEventListener('play', () => setPlayerState(true));
     audio.addEventListener('pause', () => setPlayerState(false));
+    audio.addEventListener('ended', () => {
+        audio.currentTime = 0;
+        audio.play().catch(() => setPlayerState(false));
+    });
     setPlayerState(false);
 }
 
@@ -539,7 +556,7 @@ window.addEventListener('resize', function() {
 
 // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ И ИСЧЕЗНОВЕНИЯ БЛОКОВ ПРИ ПРОКРУТКЕ =====
 function initScrollAnimation() {
-    const blocks = document.querySelectorAll('.story, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .photo-interlude, .rsvp');
+    const blocks = document.querySelectorAll('.story, .organizer-contact, .timer-section, .calendar-section, .schedule, .location, .dresscode, .info, .photo-interlude, .rsvp');
     
     if (!blocks.length) return;
 
