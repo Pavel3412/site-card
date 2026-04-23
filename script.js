@@ -562,23 +562,29 @@ function initScrollAnimation() {
 
     function updateBlockVisibility() {
         const viewportHeight = window.innerHeight;
-        const showLine = viewportHeight * 0.82;
-        const hideLine = viewportHeight * 0.08;
+        const showTop = viewportHeight * 0.14;
+        const showBottom = viewportHeight * 0.86;
+        const hideTop = viewportHeight * 0.02;
+        const hideBottom = viewportHeight * 0.98;
 
         blocks.forEach(block => {
             const rect = block.getBoundingClientRect();
-            const shouldShow = rect.top <= showLine && rect.bottom >= hideLine;
+            const isVisible = block.classList.contains('visible-scroll');
 
-            if (shouldShow) {
-                block.classList.add('visible-scroll');
+            if (isVisible) {
+                const shouldHide = rect.bottom < hideTop || rect.top > hideBottom;
+
+                if (shouldHide) {
+                    block.classList.remove('visible-scroll');
+                }
+
                 return;
             }
 
-            const isAboveViewport = rect.bottom < hideLine;
-            const isBelowViewport = rect.top > showLine;
+            const shouldShow = rect.top <= showBottom && rect.bottom >= showTop;
 
-            if (isAboveViewport || isBelowViewport) {
-                block.classList.remove('visible-scroll');
+            if (shouldShow) {
+                block.classList.add('visible-scroll');
             }
         });
     }
